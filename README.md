@@ -213,22 +213,24 @@ sudo pip install -U pip setuptools && sudo pip3 install -U pip setuptools
 git clone https://github.com/TheHive-Project/Cortex-Analyzers
 ```
 
-# Install Analyzers:
+**Install Analyzers**:
 
 ```bash
 for I in $(find Cortex-Analyzers -name 'requirements.txt'); do sudo -H pip install -r $I; done && \
 for I in $(find Cortex-Analyzers -name 'requirements.txt'); do sudo -H pip3 install -r $I || true; done
+```
 
- # Modify the application.conf file to point to the analyzers' directory: 
-
+ **Modify the application.conf file to point to the analyzers' directory:** 
+```bash
 /etc/cortex/application.conf
 
- # analyzer { # Directory that holds analyzers 
+ **analyzer { # Directory that holds analyzers 
 
 path = [ "/path/to/default/analyzers", 
 "/path/to/my/own/analyzers" # e.g., /opt/cortex/Cortex-Analyzers/analyzers 
 ]
-} ```
+}
+```
 
 ### VPS-2 for TheHive, MISP 
 
