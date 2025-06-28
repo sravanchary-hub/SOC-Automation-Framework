@@ -41,7 +41,7 @@ By implementing this SOAR workflow, you can **automate security operations**, re
 - **HDD:** 120GB+
 - **OS:** Ubuntu 24.04 LTS
 
-### **1️⃣ Install Wazuh SIEM**  
+### **Install Wazuh SIEM**  
 Follow the official Wazuh installation guide:  
 🔗— [Wazuh Installation Guide](https://documentation.wazuh.com/current/installation-guide/index.html)  
 
@@ -67,7 +67,7 @@ Follow the official Wazuh installation guide:
 5. **Access Wazuh Dashboard:**
    - Open your browser and go to: `https://<Public IP of Wazuh>`
 
-![Wazuh](https://github.com/user-attachments/assets/1ab85349-4e1f-4916-a363-ed0a1c8030c6)
+![image](https://github.com/user-attachments/assets/cdb1b54c-badd-4c1e-876d-107eec169016)
 
 
 ### **Install Shuffle SOAR**  
@@ -188,6 +188,9 @@ sudo systemctl status cortex
 URL: http://<your-server-ip>:9001
 ```
 
+<img width="946" alt="image" src="https://github.com/user-attachments/assets/8c16be52-becc-4d12-8d88-0e1ed0f6fae2" />
+
+
 **Steps to Set Up Analyzers and Responders**
 
  #Step (1) Install pip for Python 2Ensure pip for Python 2 is installed:
@@ -240,9 +243,9 @@ path = [ "/path/to/default/analyzers",
 - **HDD:** 120GB+
 - **OS:** Ubuntu 24.04 LTS
 
-### **2ï¸âƒ£ Install TheHive**  
+### **Install TheHive**  
 Follow the official documentation for installing TheHive:  
-ðŸ”— [TheHive Installation Guide](https://docs.strangebee.com/thehive/installation/)  
+[TheHive Installation Guide](https://docs.strangebee.com/thehive/installation/)  
 
 1. **Install Dependencies:**
    ```bash
@@ -402,32 +405,32 @@ Follow the official documentation for installing TheHive:
    systemctl status thehive
    ```
 
-## ?? Workflow - Automating Incident Response  
+## 🔄 Workflow - Automating Incident Response  
 
-### ?? Workflow Overview  
+### 📌 Workflow Overview  
 This workflow automates incident response using **Shuffle**, **Wazuh**, **TheHive (with built-in Cortex analyzers and responders)**, and **MISP**.  
 
-1?? **Receive alerts** from **Wazuh SIEM** when suspicious activity is detected.  
-2?? **Forward the alert to TheHive**, where **automatic enrichment** (Cortex analyzers like VirusTotal, AbuseIPDB, MISP lookup) is performed within TheHive.  
-3?? **Check for duplicate cases** in TheHive; create a **new case** or **update an existing case** with observables and context.  
-4?? **Trigger responders (via TheHive)** to take response actions like blocking IPs, disabling users, or quarantining machines if needed.  
-5?? **Send an email notification** to the specific **Wazuh agent** owner or SOC team based on the alert source.  
+1️⃣ **Receive alerts** from **Wazuh SIEM** when suspicious activity is detected.  
+2️⃣ **Forward the alert to TheHive**, where **automatic enrichment** (Cortex analyzers like VirusTotal, AbuseIPDB, MISP lookup) is performed within TheHive.  
+3️⃣ **Check for duplicate cases** in TheHive; create a **new case** or **update an existing case** with observables and context.  
+4️⃣ **Trigger responders (via TheHive)** to take response actions like blocking IPs, disabling users, or quarantining machines if needed.  
+5️⃣ **Send an email notification** to the specific **Wazuh agent** owner or SOC team based on the alert source.  
 
 ---  
 
-## ?? Shuffle Workflow Steps  
+## 📌 Shuffle Workflow Steps  
 
-?? **Step 1: Add Wazuh Alert as Trigger**  
+🔹 **Step 1: Add Wazuh Alert as Trigger**  
 - Create a **Webhook Trigger** in Shuffle.  
 - Configure **Wazuh** to send alerts to Shuffle via webhook.  
 
-?? **Step 2: Parse the Alert**  
+🔹 **Step 2: Parse the Alert**  
 - Extract:  
   - **Agent name / Agent ID** (for targeted notifications)  
   - **Source IPs, hashes, domains, URLs** (observables)  
   - **Rule ID, alert description, severity, timestamp**  
 
-?? **Step 3: Check for Duplicates in TheHive**  
+🔹 **Step 3: Check for Duplicates in TheHive**  
 - Use TheHive's API:  
   - Search existing cases for matching observables or titles.  
 - **If case exists:**  
@@ -435,12 +438,12 @@ This workflow automates incident response using **Shuffle**, **Wazuh**, **TheHiv
 - **If no case exists:**  
   - **Create a new case** with alert details and observables.  
 
-?? **Step 4: Trigger TheHive's Automation (Analyzers & Responders)**  
+🔹 **Step 4: Trigger TheHive's Automation (Analyzers & Responders)**  
 - Once the case is created or updated, TheHive automatically:  
   - Runs configured **analyzers** (VirusTotal, AbuseIPDB, MISP, etc.) on observables.  
   - Executes **responders** if conditions are met (e.g., block IP, disable user, or notify external systems).  
 
-?? **Step 5: Send Email Notification**  
+🔹 **Step 5: Send Email Notification**  
 - Use Shuffle's **SMTP App** to send an email to:  
   - **The agent owner** (based on agent name from Wazuh alert).  
   - Or the **SOC team email**.  
@@ -449,35 +452,14 @@ This workflow automates incident response using **Shuffle**, **Wazuh**, **TheHiv
   - Link to the TheHive case  
   - Severity level  
   
-?? **Step 7: (Optional) Auto-Mitigation**  
+🔹 **Step 7: (Optional) Auto-Mitigation**  
 - If enrichment indicates **high risk**, trigger:  
   - **Block IP** via firewall API, Wazuh active response, or router.  
   - Disable user accounts or isolate machines via EDR/API integrations.
 
 ---  
 
-## ?? Running the Workflow  
-
-### ? Step 1: Configure Wazuh to Send Alerts to Shuffle  
-
-Edit the Wazuh **ossec.conf** to enable webhook integration:  
-
-```xml
-<integration>
-  <name>custom-webhook</name>
-  <hook_url>http://<shuffle-ip>:5001/webhook</hook_url>
-  <event_format>json</event_format>
-</integration>
- 
-
-?? **Step 7: (Optional) Auto-Mitigation**  
-- If enrichment indicates **high risk**, trigger:  
-  - **Block IP** via firewall API, Wazuh active response, or router.  
-  - Disable user accounts or isolate machines via EDR/API integrations.  
-
----  
-
-## ðŸš€ Running the Workflow  
+## 🚀 Running the Workflow  
 
 ### **Step 1: Configure Wazuh to Send Alerts to Shuffle**  
 Edit the Wazuh **ossec.conf** file to send webhook alerts:  
@@ -496,58 +478,57 @@ sudo systemctl restart wazuh-manager
 ### **Step 2: Configure TheHive API Key**  
 Generate an API key in TheHive and add it to Shuffleâ€™s HTTP Request node.  
 
-```
-
-### **Step 4: Test the Workflow**  
-- Trigger an alert in Wazuh (e.g., failed SSH logins).  
+### **Step 3: Test the Workflow**  
+- Trigger an alert in Wazuh (e.g., Windows audit failure event).  
 - Verify the incident is created in TheHive.  
-- Check if the alert is sent to Discord.  
+- Check if the alert is sent to Gmail.  
+
+## 📌 Example Output  
+
+✅ **TheHive Incident Created:**  
+
+[INFO] New Incident Created in TheHive:
+- Title: Windows audit failure event
+- Severity: High
+- Source: Wazuh SIEM
 
 ---
 
-## ðŸ“Œ Example Output  
-
-âœ… **TheHive Incident Created:**  
-```
-[INFO] New Incident Created in TheHive:
-- Title: Suspicious SSH Login Attempts
-- Severity: High
-- Source: Wazuh SIEM
-```
-
-âœ… **Email Notification Sent:**  
-Subject: ?? Wazuh Alert - SRV-01 ??
+✅ **Email Notification Sent:**  
+Subject: Windows audit failure event
 
 Body:
-New security alert detected from agent: SRV-01
+Hive case like below 
 
-- Alert Name: Suspicious SSH Login Attempts
+- Alert Name: Windows audit failure event
 - Source IP: 192.168.1.100
-- Rule ID: 5710
+- Rule ID: 60104
 - Severity: High
 
 The case has been created/updated in TheHive.
 
 Check TheHive: http://<thehive-ip>:9000
 
----
-
-## ðŸŽ¯ Future Enhancements  
-ðŸ”¹ Add auto-mitigation (e.g., blocking attacker IPs via firewall rules).  
-ðŸ”¹ Integrate more threat intelligence feeds (e.g., MISP, Shodan API).  
-ðŸ”¹ Expand automation to handle different types of incidents.  
+<img width="494" alt="image" src="https://github.com/user-attachments/assets/6dcc2556-c347-4102-97c5-1e68de79779f" />
 
 ---
 
-## ðŸ“œ License  
+## 🎯 Future Enhancements  
+🔹 Add auto-mitigation (e.g., blocking attacker IPs via firewall rules).  
+🔹 Integrate more threat intelligence feeds (e.g., MISP, Shodan API).  
+🔹 Expand automation to handle different types of incidents.  
+
+---
+
+## 📜 License  
 This project is licensed under the **MIT License**.  
 
 ---
 
-## ðŸ“¬ Contact  
+## 📬 Contact  
 
-?? **Author:** Sravanchary  
-?? **GitHub:** [https://github.com/sravanchary1](https://github.com/sravanchary1)  
-?? **LinkedIn:** [https://www.linkedin.com/in/sravan-chary-18b520259](https://www.linkedin.com/in/sravan-chary-18b520259)  
+👤 **Author:** Sravanchary  
+💻 **GitHub:** [https://github.com/sravanchary1](https://github.com/sravanchary1)  
+📧 **LinkedIn:** [https://www.linkedin.com/in/sravan-chary-18b520259](https://www.linkedin.com/in/sravan-chary-18b520259)  
 
 ---
