@@ -91,7 +91,8 @@ sudo docker-compose up -d
 ```
 Access Shuffle Web UI at http://YOUR-IP:3001
 
-![Shuffle](https://github.com/user-attachments/assets/287a3125-11ba-48d7-be7b-f0e7a35890df)
+<img width="953" alt="image" src="https://github.com/user-attachments/assets/37ef149c-94e8-4fdb-85e6-7d624de8af2d" />
+
 
 ### 🔗-- Cortex Installation Guide --
 
@@ -405,6 +406,20 @@ Follow the official documentation for installing TheHive:
    systemctl status thehive
    ```
 
+### ✅ MISP Installation:
+
+```bash
+# Please check the installer options first to make the best choice for your install
+wget --no-cache -O /tmp/INSTALL.sh https://raw.githubusercontent.com/MISP/MISP/2.5/INSTALL/INSTALL.sh
+bash /tmp/INSTALL.sh
+
+# This will install MISP Core
+wget --no-cache -O /tmp/INSTALL.sh https://raw.githubusercontent.com/MISP/MISP/2.5/INSTALL/INSTALL.sh
+bash /tmp/INSTALL.sh -c
+```
+<img width="958" alt="image" src="https://github.com/user-attachments/assets/177037f0-3262-4cb6-9fa3-f6d7856c033d" />
+
+
 ## 🔄 Workflow - Automating Incident Response  
 
 ### 📌 Workflow Overview  
@@ -457,6 +472,8 @@ This workflow automates incident response using **Shuffle**, **Wazuh**, **TheHiv
   - **Block IP** via firewall API, Wazuh active response, or router.  
   - Disable user accounts or isolate machines via EDR/API integrations.
 
+<img width="956" alt="image" src="https://github.com/user-attachments/assets/76d97599-fe80-44f3-94d3-89b8750b5fa6" />
+
 ---  
 
 ## 🚀 Running the Workflow  
@@ -478,7 +495,10 @@ sudo systemctl restart wazuh-manager
 ### **Step 2: Configure TheHive API Key**  
 Generate an API key in TheHive and add it to Shuffleâ€™s HTTP Request node.  
 
-### **Step 3: Test the Workflow**  
+### **Step 3: Configure the Cortex Job**
+Set the cortex job afer the webhook listener to analyze
+
+### **Step 4: Test the Workflow**  
 - Trigger an alert in Wazuh (e.g., Windows audit failure event).  
 - Verify the incident is created in TheHive.  
 - Check if the alert is sent to Gmail.  
@@ -515,7 +535,7 @@ Check TheHive: http://<thehive-ip>:9000
 
 ## 🎯 Future Enhancements  
 🔹 Add auto-mitigation (e.g., blocking attacker IPs via firewall rules).  
-🔹 Integrate more threat intelligence feeds (e.g., MISP, Shodan API).  
+🔹 Integrate more threat intelligence feeds  
 🔹 Expand automation to handle different types of incidents.  
 
 ---
