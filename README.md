@@ -235,7 +235,7 @@ path = [ "/path/to/default/analyzers",
 ]
 }
 ```
-
+---
 ### VPS-2 for TheHive, MISP 
 
 **Specifications**
@@ -534,9 +534,38 @@ Check TheHive: http://<thehive-ip>:9000
 ---
 
 ## 🎯 Future Enhancements  
-🔹 Add auto-mitigation (e.g., blocking attacker IPs via firewall rules).  
-🔹 Integrate more threat intelligence feeds  
-🔹 Expand automation to handle different types of incidents.  
+1. Add More Automated Response Actions
+   
+🔥 Block IPs on Firewalls:
+Integrate with iptables, UFW, or Cloud Firewall APIs (e.g., AWS, Azure, Cloudflare).
+
+🧠 Quarantine Endpoints:
+Integrate with Velociraptor, OSQuery, or EDR tools (like Wazuh Active Response or CrowdSec).
+
+🧹 Kill Malicious Processes or Delete Files:
+Create a responder that communicates with an endpoint agent to terminate processes or delete malware.
+
+2. Playbook Library
+   
+Develop a Playbook Repository:
+Examples: Phishing, Malware Outbreak, Ransomware, Insider Threat, Brute Force, etc.
+
+Each playbook should include:
+Detection → Enrichment → Containment → Notification → Closure
+
+3. Dashboards for SOC Visibility
+   
+Build custom SOC Dashboards using:
+Grafana + ElasticSearch for Wazuh data.
+
+TheHive API to display open cases, severity breakdown, response time, etc.
+Shuffle API metrics for automation performance.
+
+4. Incident SLA Tracking
+   
+Implement SLA timers:
+Track time to acknowledge, time to respond, and time to resolve.
+Integrate SLA breach alerts into email, Slack, or Discord.
 
 ---
 
