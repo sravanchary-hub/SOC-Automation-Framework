@@ -364,7 +364,7 @@ Follow the official documentation for installing TheHive:
    systemctl status elasticsearch
    ```
 
-## Configure TheHive
+ **Configure TheHive**
 
 1. **Ensure Proper Ownership:**
    ```bash
@@ -534,7 +534,7 @@ Check TheHive: http://<thehive-ip>:9000
 ---
 
 ## 🎯 Future Enhancements  
-1. Add More Automated Response Actions
+**1. Add More Automated Response Actions**
    
 🔥 Block IPs on Firewalls:
 Integrate with iptables, UFW, or Cloud Firewall APIs (e.g., AWS, Azure, Cloudflare).
@@ -545,7 +545,7 @@ Integrate with Velociraptor, OSQuery, or EDR tools (like Wazuh Active Response o
 🧹 Kill Malicious Processes or Delete Files:
 Create a responder that communicates with an endpoint agent to terminate processes or delete malware.
 
-2. Playbook Library
+**2. Playbook Library**
    
 Develop a Playbook Repository:
 Examples: Phishing, Malware Outbreak, Ransomware, Insider Threat, Brute Force, etc.
@@ -553,7 +553,7 @@ Examples: Phishing, Malware Outbreak, Ransomware, Insider Threat, Brute Force, e
 Each playbook should include:
 Detection → Enrichment → Containment → Notification → Closure
 
-3. Dashboards for SOC Visibility
+**3. Dashboards for SOC Visibility**
    
 Build custom SOC Dashboards using:
 Grafana + ElasticSearch for Wazuh data.
@@ -561,7 +561,7 @@ Grafana + ElasticSearch for Wazuh data.
 TheHive API to display open cases, severity breakdown, response time, etc.
 Shuffle API metrics for automation performance.
 
-4. Incident SLA Tracking
+**4. Incident SLA Tracking**
    
 Implement SLA timers:
 Track time to acknowledge, time to respond, and time to resolve.
